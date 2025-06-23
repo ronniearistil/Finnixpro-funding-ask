@@ -1,207 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editable Funding Allocation Chart</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f9fafb;
-            color: #111827;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 1rem;
-        }
-        #chart-container {
-            width: 100%;
-            max-width: 900px;
-            background: #ffffff;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            border-radius: 0.75rem;
-            padding: 2.5rem;
-            box-sizing: border-box;
-        }
-        .input-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        .color-box {
-            width: 1rem;
-            height: 1rem;
-            margin-right: 0.75rem;
-            border-radius: 0.25rem;
-        }
-        .input-label {
-            flex-grow: 1;
-            color: #374151;
-            font-weight: 500;
-        }
-        .percent-input {
-            width: 60px;
-            text-align: right;
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            padding: 0.25rem 0.5rem;
-            font-size: 1rem;
-        }
-        .percent-sign {
-            margin-left: 0.5rem;
-            color: #6b7280;
-            font-size: 1rem;
-        }
-        #total-percent-warning {
-            color: #ef4444; /* Red-500 */
-            font-weight: 500;
-            text-align: center;
-            margin-top: 1rem;
-            display: none; /* Hidden by default */
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FinnixPro | Funding Allocation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb;
+      color: #1f2937;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1rem;
+      margin: 0;
+    }
+    #chart-container {
+      width: 100%;
+      max-width: 960px;
+      background: #ffffff;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+      border-radius: 1rem;
+      padding: 2.5rem;
+    }
+    .input-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .color-box {
+      width: 1rem;
+      height: 1rem;
+      border-radius: 0.25rem;
+      margin-right: 0.75rem;
+    }
+    .input-label {
+      flex-grow: 1;
+      font-weight: 500;
+      color: #374151;
+    }
+    .percent-input {
+      width: 64px;
+      text-align: right;
+      border: 1px solid #d1d5db;
+      border-radius: 0.375rem;
+      padding: 0.25rem 0.5rem;
+      font-size: 1rem;
+    }
+    .percent-sign {
+      margin-left: 0.5rem;
+      color: #6b7280;
+    }
+    #total-percent-warning {
+      color: #ef4444;
+      font-weight: 500;
+      text-align: center;
+      margin-top: 1rem;
+      display: none;
+    }
+  </style>
 </head>
 <body>
 
-    <div id="chart-container">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-2">$500k to Ignite the GTM Engine</h1>
-        <p class="text-center text-gray-500 mb-8">A pre-seed SAFE to fund our 18-month runway.</p>
+  <div id="chart-container">
+    <h1 class="text-3xl font-bold text-center text-teal-700 mb-2">$500k Funding Allocation</h1>
+    <p class="text-center text-gray-500 mb-8">Fueling 18 months of runway across GTM, product, and people.</p>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <!-- Inputs -->
-            <div id="inputs-container">
-                <!-- GTM Growth -->
-                <div class="input-group">
-                    <div class="color-box" style="background-color: #059669;"></div>
-                    <label for="gtm-input" class="input-label">GTM Growth</label>
-                    <input type="number" id="gtm-input" class="percent-input" value="40">
-                    <span class="percent-sign">%</span>
-                </div>
-                <!-- Product Expansion -->
-                <div class="input-group">
-                    <div class="color-box" style="background-color: #34d399;"></div>
-                    <label for="product-input" class="input-label">Product Expansion</label>
-                    <input type="number" id="product-input" class="percent-input" value="35">
-                    <span class="percent-sign">%</span>
-                </div>
-                <!-- Key Hires -->
-                <div class="input-group">
-                    <div class="color-box" style="background-color: #6ee7b7;"></div>
-                    <label for="hires-input" class="input-label">Key Hires</label>
-                    <input type="number" id="hires-input" class="percent-input" value="20">
-                    <span class="percent-sign">%</span>
-                </div>
-                <!-- Legal & Runway -->
-                <div class="input-group">
-                    <div class="color-box" style="background-color: #a7f3d0;"></div>
-                    <label for="legal-input" class="input-label">Legal & Runway</label>
-                    <input type="number" id="legal-input" class="percent-input" value="5">
-                    <span class="percent-sign">%</span>
-                </div>
-                 <div id="total-percent-warning">Total must be 100%</div>
-            </div>
-
-            <!-- Donut Chart -->
-            <div class="relative w-full" style="padding-top: 100%;"> <!-- Aspect ratio container -->
-                 <svg id="donut-chart" class="absolute top-0 left-0 w-full h-full" viewBox="0 0 100 100"></svg>
-                 <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none">
-                     <div class="text-center">
-                         <p class="text-4xl font-bold text-gray-800">$500k</p>
-                         <p class="text-lg text-gray-500">Pre-Seed</p>
-                     </div>
-                 </div>
-            </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <!-- Funding Input Controls -->
+      <div id="inputs-container">
+        <!-- GTM Acceleration -->
+        <div class="input-group">
+          <div class="color-box" style="background-color: #0d9488;"></div>
+          <label for="gtm-input" class="input-label">Go-to-Market Acceleration</label>
+          <input type="number" id="gtm-input" class="percent-input" value="40">
+          <span class="percent-sign">%</span>
         </div>
+        <!-- Product & Infra Expansion -->
+        <div class="input-group">
+          <div class="color-box" style="background-color: #14b8a6;"></div>
+          <label for="product-input" class="input-label">Product & Infrastructure</label>
+          <input type="number" id="product-input" class="percent-input" value="35">
+          <span class="percent-sign">%</span>
+        </div>
+        <!-- Strategic Hires -->
+        <div class="input-group">
+          <div class="color-box" style="background-color: #2dd4bf;"></div>
+          <label for="hires-input" class="input-label">Strategic Hires</label>
+          <input type="number" id="hires-input" class="percent-input" value="20">
+          <span class="percent-sign">%</span>
+        </div>
+        <!-- Legal, Ops, and Runway Buffer -->
+        <div class="input-group">
+          <div class="color-box" style="background-color: #5eead4;"></div>
+          <label for="legal-input" class="input-label">Legal, Ops & Runway Buffer</label>
+          <input type="number" id="legal-input" class="percent-input" value="5">
+          <span class="percent-sign">%</span>
+        </div>
+        <div id="total-percent-warning">Total must be 100%</div>
+      </div>
+
+      <!-- Donut Chart -->
+      <div class="relative w-full" style="padding-top: 100%;">
+        <svg id="donut-chart" class="absolute top-0 left-0 w-full h-full" viewBox="0 0 100 100"></svg>
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div class="text-center">
+            <p class="text-4xl font-bold text-teal-700">$500k</p>
+            <p class="text-md text-gray-500">Pre-Seed Round</p>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <script>
-        // Get references to DOM elements
-        const inputs = {
-            gtm: document.getElementById('gtm-input'),
-            product: document.getElementById('product-input'),
-            hires: document.getElementById('hires-input'),
-            legal: document.getElementById('legal-input')
-        };
-        const svg = document.getElementById('donut-chart');
-        const warning = document.getElementById('total-percent-warning');
-        const radius = 40;
-        const circumference = 2 * Math.PI * radius;
+  <script>
+    const inputs = {
+      gtm: document.getElementById('gtm-input'),
+      product: document.getElementById('product-input'),
+      hires: document.getElementById('hires-input'),
+      legal: document.getElementById('legal-input')
+    };
+    const svg = document.getElementById('donut-chart');
+    const warning = document.getElementById('total-percent-warning');
+    const radius = 40;
+    const circumference = 2 * Math.PI * radius;
 
-        // Color mapping for each category
-        const colors = {
-            gtm: '#059669',     // Emerald-600
-            product: '#34d399', // Emerald-400
-            hires: '#6ee7b7',   // Emerald-300
-            legal: '#a7f3d0'    // Emerald-200
-        };
+    const colors = {
+      gtm: '#0d9488',
+      product: '#14b8a6',
+      hires: '#2dd4bf',
+      legal: '#5eead4'
+    };
 
-        // Function to create a segment of the donut chart
-        function createSegment(offset, dasharray, color) {
-            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-            circle.setAttribute("cx", "50");
-            circle.setAttribute("cy", "50");
-            circle.setAttribute("r", radius);
-            circle.setAttribute("fill", "transparent");
-            circle.setAttribute("stroke-width", "12");
-            circle.setAttribute("stroke", color);
-            circle.setAttribute("stroke-dasharray", dasharray);
-            circle.setAttribute("stroke-dashoffset", offset);
-            circle.setAttribute("transform", "rotate(-90 50 50)");
-            return circle;
-        }
+    function createSegment(offset, dasharray, color) {
+      const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      circle.setAttribute("cx", "50");
+      circle.setAttribute("cy", "50");
+      circle.setAttribute("r", radius);
+      circle.setAttribute("fill", "transparent");
+      circle.setAttribute("stroke-width", "12");
+      circle.setAttribute("stroke", color);
+      circle.setAttribute("stroke-dasharray", dasharray);
+      circle.setAttribute("stroke-dashoffset", offset);
+      circle.setAttribute("transform", "rotate(-90 50 50)");
+      return circle;
+    }
 
-        // Function to draw/update the donut chart
-        function drawChart() {
-            // Clear previous chart segments
-            svg.innerHTML = '';
+    function drawChart() {
+      svg.innerHTML = '';
+      const percentages = {
+        gtm: parseFloat(inputs.gtm.value) || 0,
+        product: parseFloat(inputs.product.value) || 0,
+        hires: parseFloat(inputs.hires.value) || 0,
+        legal: parseFloat(inputs.legal.value) || 0
+      };
 
-            // Get current values from inputs
-            const percentages = {
-                gtm: parseFloat(inputs.gtm.value) || 0,
-                product: parseFloat(inputs.product.value) || 0,
-                hires: parseFloat(inputs.hires.value) || 0,
-                legal: parseFloat(inputs.legal.value) || 0
-            };
+      const total = Object.values(percentages).reduce((sum, val) => sum + val, 0);
 
-            const total = Object.values(percentages).reduce((sum, val) => sum + val, 0);
-            
-            // Show or hide warning if total is not 100
-            if (total !== 100) {
-                warning.style.display = 'block';
-                warning.textContent = `Total must be 100% (currently ${total}%)`;
-            } else {
-                warning.style.display = 'none';
-            }
+      if (total !== 100) {
+        warning.style.display = 'block';
+        warning.textContent = `Total must be 100% (currently ${total}%)`;
+      } else {
+        warning.style.display = 'none';
+      }
 
-            let accumulatedOffset = 0;
+      let offset = 0;
+      for (const key in percentages) {
+        const percent = percentages[key];
+        const dash = `${(percent / 100) * circumference} ${circumference}`;
+        const segment = createSegment(-offset, dash, colors[key]);
+        svg.appendChild(segment);
+        offset += (percent / 100) * circumference;
+      }
+    }
 
-            for (const key in percentages) {
-                const percent = percentages[key];
-                const dasharray = `${(percent / 100) * circumference} ${circumference}`;
-                
-                // The offset positions the start of the current segment after the end of the previous one
-                const segment = createSegment(-accumulatedOffset, dasharray, colors[key]);
-                svg.appendChild(segment);
+    Object.values(inputs).forEach(input => {
+      input.addEventListener('input', drawChart);
+    });
 
-                // Add the current segment's length to the offset for the next segment
-                accumulatedOffset += (percent / 100) * circumference;
-            }
-        }
-
-        // Add event listeners to all input fields
-        Object.values(inputs).forEach(input => {
-            input.addEventListener('input', drawChart);
-        });
-
-        // Initial draw of the chart on page load
-        drawChart();
-    </script>
+    drawChart();
+  </script>
 
 </body>
 </html>
+
